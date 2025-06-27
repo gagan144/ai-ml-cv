@@ -7,8 +7,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     python3.11 python3.11-dev python3.11-venv \
     python3-pip curl git wget unzip nano \
-    && ln -sf /usr/bin/python3.11 /usr/bin/python \
-    && pip install --upgrade pip \
+    && update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1 \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 \
+    && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 \
+    && ln -sf /usr/local/bin/pip3 /usr/bin/pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install cuDNN 9.3 (manual install from NVIDIA)
@@ -21,10 +23,10 @@ RUN tar -xJf /tmp/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz -C /usr/loca
     ldconfig
 
 # Install TensorFlow 2.19
-RUN pip install tensorflow==2.19.0
+RUN pip install --no-cache-dir tensorflow==2.19.0
 
 # Copy verification script
 COPY verify_tensorflow.py /verify_tensorflow.py
 
 # Run the script by default
-CMD ["python3", "/verify_tensorflow.py"]
+CMD ["python", "/verify_tensorflow.py"]

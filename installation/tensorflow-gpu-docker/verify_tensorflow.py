@@ -4,6 +4,10 @@ import tensorflow as tf
 from tensorflow.python.client import device_lib
 import numpy as np
 
+print("--------------------------------------")
+print("Tensorflow GPU")
+print("--------------------------------------")
+print("")
 
 print("Python: "+platform.python_version())
 print("Tensorflow Version: "+tf.__version__)
