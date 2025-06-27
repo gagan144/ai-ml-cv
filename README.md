@@ -6,5 +6,6 @@ Guidelines, tools, utilities for artificial intelligence, machine learning and c
 ## Installation
 - OpenCV GPU
 - Tensorflow GPU
+  - Tensorflow GPU Docker
 
  
